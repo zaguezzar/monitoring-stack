@@ -178,35 +178,6 @@ docker-compose pull && docker-compose up -d
 4. **Regularly review and tune** alert rules to reduce noise
 5. **Monitor the monitoring stack** itself for reliability
 
-## Custom Metrics
-
-To expose custom metrics from your applications:
-
-### Python Example
-```python
-from prometheus_client import Counter, Histogram, start_http_server
-
-REQUEST_COUNT = Counter('app_requests_total', 'Total app requests')
-REQUEST_LATENCY = Histogram('app_request_duration_seconds', 'Request latency')
-
-# Start metrics server
-start_http_server(8000)
-```
-
-### Node.js Example
-```javascript
-const client = require('prom-client');
-const register = new client.Registry();
-
-const httpRequestsTotal = new client.Counter({
-  name: 'http_requests_total',
-  help: 'Total number of HTTP requests',
-  labelNames: ['method', 'route', 'status_code']
-});
-
-register.registerMetric(httpRequestsTotal);
-```
-
 ## Security Considerations
 
 1. **Network isolation**: Use Docker networks to isolate services
