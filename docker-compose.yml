@@ -12,7 +12,7 @@ volumes:
 services:
   # Prometheus - Metrics collection and storage
   prometheus:
-    image: prom/prometheus:3.4.1
+    image: prom/prometheus:v3.4.1
     container_name: prometheus
     restart: unless-stopped
     ports:
@@ -35,7 +35,7 @@ services:
 
   # Alertmanager - Alert routing and notifications
   alertmanager:
-    image: prom/alertmanager:0.28.1
+    image: prom/alertmanager:v0.28.1
     container_name: alertmanager
     restart: unless-stopped
     ports:
@@ -50,7 +50,7 @@ services:
 
   # Node Exporter - System metrics
   node_exporter:
-    image: prom/node-exporter:1.9.1
+    image: prom/node-exporter:v1.9.1
     container_name: node_exporter
     restart: unless-stopped
     ports:
@@ -124,7 +124,7 @@ services:
       - "3000:3000"
     environment:
       - GF_SECURITY_ADMIN_USER=admin
-      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_ADMIN_PASSWORD}
       - GF_USERS_ALLOW_SIGN_UP=false
     volumes:
       - ./config/grafana/provisioning:/etc/grafana/provisioning
@@ -132,6 +132,8 @@ services:
       - grafana_data:/var/lib/grafana
     networks:
       - monitoring
+    env_file:
+      - .env
     depends_on:
       - prometheus
       - loki
