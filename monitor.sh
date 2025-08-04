@@ -95,7 +95,6 @@ cleanup() {
     if [[ "$response" =~ ^[Yy]$ ]]; then
         print_status "Cleaning up monitoring stack..."
         docker-compose down -v --remove-orphans
-        docker system prune -f
         print_status "Cleanup completed!"
     else
         print_status "Cleanup cancelled."
