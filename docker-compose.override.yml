@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  # Sample application with metrics
+  sample-app:
+    build: 
+      context: ./examples
+      dockerfile: Dockerfile
+    container_name: sample-app
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    networks:
+      - monitoring
+
+  # Override Prometheus config to include sample app
+  prometheus:
+    volumes:
+      - ./config/prometheus:/etc/prometheus
+      - ./config/prometheus-with-sample:/etc/prometheus-override
+    command:
+      - '--config.file=/etc/prometheus-override/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--storage.tsdb.retention.time=168h'
+      - '--web.enable-lifecycle'
+      - '--web.enable-admin-api'
