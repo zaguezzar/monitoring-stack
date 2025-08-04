@@ -35,7 +35,7 @@ docker-compose ps
 
 ### Access the Services
 
-- **Grafana**: http://localhost:3000 (admin/admin)
+- **Grafana**: http://localhost:3000
 - **Prometheus**: http://localhost:9090
 - **Alertmanager**: http://localhost:9093
 - **Loki**: http://localhost:3100
@@ -109,7 +109,7 @@ The following alerts are pre-configured:
 ### For Production Use:
 
 1. **Change default passwords**:
-   - Update Grafana admin password in docker-compose.yml
+   - Update Grafana admin password in .env
    - Set up proper authentication
 
 2. **Configure external storage**:
